@@ -1,13 +1,38 @@
 const producteService = require("../services/producteService");
 
 const getAllProductes = (req, res) => {
-    const allProductes = producteService.getAllProductes();
-    res.send("GET all productes");
+    const { mode } = req.query;
+    try {
+      const allProductes = producteService.getAllProductes({ mode });
+      res.send({ status: "OK", data: allProductes });
+    } catch (error) {
+      res
+        .status(error?.status || 500)
+        .send({ status: "FAILED", data: { error: error?.message || error } });
+    }
 };
 
 const getProducte = (req, res) => {
-    const oneProducte = producteService.getProducte(req.params.producteID);
-    res.send(`GET producte ${req.params.producteID}`);
+    const {
+        params: { producteID },
+      } = req;
+    
+      if (!producteID) {
+        res.status(400).send({
+          status: "FAILED",
+          data: { error: "Parameter ':producteID' can not be empty" },
+        });
+        return;
+      }
+    
+      try {
+        const producte = producteService.getProducte(producteID);
+        res.send({ status: "OK", data: producte });
+      } catch (error) {
+        res
+          .status(error?.status || 500)
+          .send({ status: "FAILED", data: { error: error?.message || error } });
+      }
 };
 
 const createProducte = (req, res) => {
@@ -16,13 +41,48 @@ const createProducte = (req, res) => {
 };
 
 const updateProducte = (req, res) => {
-    const updateProducte = producteService.updateProducte(req.params.producteID);
-    res.send(`UPDATE producte ${req.params.producteID}`);
+    const {
+        body,
+        params: { producteID },
+      } = req;
+    
+      if (!producteID) {
+        res.status(400).send({
+          status: "FAILED",
+          data: { error: "Parameter ':producteID' can not be empty" },
+        });
+      }
+    
+      try {
+        const updateProductes = producteService.updateProducte(producteID, body);
+        res.send({ status: "OK", data: updateProductes });
+      } catch (error) {
+        res
+          .status(error?.status || 500)
+          .send({ status: "FAILED", data: { error: error?.message || error } });
+      }
 };
 
 const deleteProducte = (req, res) => {
-    const deleteProducte = producteService.deleteProducte(req.params.producteID);
-    res.send(`DELETE producte ${req.params.producteID}`);
+    const {
+        params: { producteID },
+      } = req;
+    
+      if (!producteID) {
+        res.status(400).send({
+          status: "FAILED",
+          data: { error: "Parameter ':producteID' can not be empty" },
+        });
+      }
+    
+      try {
+        producteService.deleteProducte(producteID);
+        res.status(204).send({ status: "OK" });
+      } catch (error) {
+        res
+          .status(error?.status || 500)
+          .send({ status: "FAILED", data: { error: error?.message || error } });
+      }
 };
 
 module.exports = {
