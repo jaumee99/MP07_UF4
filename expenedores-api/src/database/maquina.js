@@ -12,7 +12,7 @@ const getAllMaquines = () => {
 }
 
 const getMaquina = (maquinaID) => {
-    db.all("SELECT * FROM Maquina WHERE Id = ?", maquinaID, (err, rows) => {
+    db.all("SELECT * FROM Maquina WHERE ID = ?", maquinaID, (err, rows) => {
         if (err) {
             console.log(err);
         } else {
