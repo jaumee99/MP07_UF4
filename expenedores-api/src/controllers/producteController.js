@@ -39,27 +39,25 @@ const createProducte = (req, res) => {
     const { body } = req;
 
     if (
-        !body.nom ||
-        !body.preu ||
-        !body.stock ||
-        !body.id_categoria ||
-        !body.id_proveidor
+        !body.Nom ||
+        !body.Tipus ||
+        !body.Preu ||
+        !body.Categoria
     ) {
         res.status(400).send({
             status: "FAILED",
             data: {
                 error:
-                    "One of the following keys is missing or is empty in request body: 'nom', 'preu', 'stock', 'id_categoria', 'id_proveidor'",
+                    "One of the following keys is missing or is empty in request body: 'nom', 'preu', 'stock', 'id_categoria'",
             },
         });
     }
 
     const newProducte = {
-        nom: body.nom,
-        preu: body.preu,
-        stock: body.stock,
-        id_categoria: body.id_categoria,
-        id_proveidor: body.id_proveidor,
+        Nom: body.Nom,
+        Tipus: body.Tipus,
+        Preu: body.Preu,
+        Categoria: body.Categoria,
     };
 
     try {

@@ -1,8 +1,8 @@
 var sqlite3 = require('sqlite3');
-var db = new sqlite3.Database('Expenedores.db');
+var db = new sqlite3.Database('expenedores.db');
 
 const getAllProductes = () => {
-    db.all("SELECT * FROM Productes", (err, rows) => {
+    db.all("SELECT * FROM Producte", (err, rows) => {
         if (err) {
             console.log(err);
         } else {
@@ -12,7 +12,7 @@ const getAllProductes = () => {
 }
 
 const getProducte = (producteID) => {
-    db.all("SELECT * FROM Productes WHERE id = ?", producteID, (err, rows) => {
+    db.all("SELECT * FROM Producte WHERE Nom = ?", producteID, (err, rows) => {
         if (err) {
             console.log(err);
         } else {
@@ -21,18 +21,19 @@ const getProducte = (producteID) => {
     });
 }
 
-const createProducte = (producteID) => {
-    db.run("INSERT INTO Productes (nom, preu, stock, id_categoria, id_proveidor) VALUES (?, ?, ?, ?, ?)", producteID, (err, rows) => {
+const createProducte = (producte) => {
+    console.log(producte.Nom, producte.Tipus, producte.Preu, producte.Categoria);
+    db.run("INSERT INTO Producte (Nom, Tipus, Preu, Categoria) VALUES (?, ?, ?, ?)", [producte.Nom, producte.Tipus, producte.Preu, producte.Categoria], (err) => {
         if (err) {
             console.log(err);
         } else {
-            console.log(rows);
+            console.log("Producte created");
         }
     });
 }
 
-const updateProducte = (producteID) => {
-    db.run("UPDATE Productes SET nom = ?, preu = ?, stock = ?, id_categoria = ?, id_proveidor = ? WHERE id = ?", producteID, (err, rows) => {
+const updateProducte = (producteId, body) => {
+    db.run("UPDATE Producte SET Nom = ?, Tipus = ?, Preu = ?, Categoria = ? WHERE Nom = ?", [body.Nom, body.Tipus, body.Preu, body.Categoria, producteId], (err, rows) => {
         if (err) {
             console.log(err);
         } else {
@@ -42,7 +43,7 @@ const updateProducte = (producteID) => {
 }
 
 const deleteProducte = (producteID) => {
-    db.run("DELETE FROM Productes WHERE id = ?", producteID, (err, rows) => {
+    db.run("DELETE FROM Producte WHERE Nom = ?", producteID, (err, rows) => {
         if (err) {
             console.log(err);
         } else {

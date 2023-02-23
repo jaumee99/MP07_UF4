@@ -33,9 +33,9 @@ const createProducte = (newProducte) => {
       }
 };
 
-const updateProducte = (producteID, changes) => {
+const updateProducte = (producteID, body) => {
     try {
-        const updateProductes = Producte.updateProducte(producteID, changes);
+        const updateProductes = Producte.updateProducte(producteID, body);
         return updateProductes;
       } catch (error) {
         throw error;

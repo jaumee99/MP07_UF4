@@ -50,7 +50,7 @@ const producteController = require("../../controllers/producteController");
 router
     .get("/", producteController.getAllProductes)
     .get("/:producteID", producteController.getProducte)
-    .post("/:producteID", producteController.createProducte)
+    .post("/", producteController.createProducte)
     .patch("/:producteID", producteController.updateProducte)
     .delete("/:producteID", producteController.deleteProducte);
 
