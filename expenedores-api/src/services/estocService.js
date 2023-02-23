@@ -1,3 +1,4 @@
+/*
 const { v4: uuid } = require("uuid");
 const Estoc = require("../database/estoc");
 
@@ -55,3 +56,4 @@ module.exports = {
     updateEstoc,
     deleteEstoc
 };
+*/
